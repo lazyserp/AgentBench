@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "ticket_id": "TCK-1001",
+    "employee_id": "EMP-101",
+    "title": "Laptop won't turn on",
+    "description": "Black screen after reboot",
+    "priority": "high",
+    "status": "open"
+  }
+]
