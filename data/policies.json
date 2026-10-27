@@ -1,0 +1,32 @@
+[
+  {
+    "id": "POL-001",
+    "title": "Paid Time Off (PTO) and Rollover",
+    "category": "HR",
+    "content": "Employees accrue 1.5 days of PTO per month. A maximum of 5 unused vacation days can be carried over into the next calendar year. Any additional unused vacation days are forfeited on December 31st."
+  },
+  {
+    "id": "POL-002",
+    "title": "Sick Leave and Medical Documentation",
+    "category": "HR",
+    "content": "Employees receive 8 paid sick days per year. If an employee takes more than 3 consecutive sick days, a medical certificate or doctor's note must be submitted to HR within 48 hours of return."
+  },
+  {
+    "id": "POL-003",
+    "title": "Work From Home Equipment Reimbursement",
+    "category": "IT",
+    "content": "Employees may expense up to $500 for home office setup (monitors, keyboards, desk chairs) upon joining. Hardware purchases above $500 require prior written approval from both department manager and IT."
+  },
+  {
+    "id": "POL-004",
+    "title": "Password Reset and Multi-Factor Authentication (MFA)",
+    "category": "IT",
+    "content": "Passwords must be at least 16 characters and expire every 90 days. For locked accounts, employees must verify identity via corporate phone call or their direct manager before IT can issue a temporary reset token."
+  },
+  {
+    "id": "POL-005",
+    "title": "Travel and Expense Reimbursement",
+    "category": "Finance",
+    "content": "Business travel meals are reimbursed up to $75 per day without pre-approval. Flights and hotel bookings must be booked through the company portal at least 14 days in advance."
+  }
+]

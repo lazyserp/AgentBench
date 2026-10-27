@@ -1,0 +1,68 @@
+[
+  {
+    "id": "EMP-101",
+    "name": "Sarah Connor",
+    "department": "Engineering",
+    "role": "Senior DevOps Engineer",
+    "email": "sarah.connor@fictional.corp",
+    "leave_balance": {
+      "vacation": 14,
+      "sick": 5
+    }
+  },
+  {
+    "id": "EMP-102",
+    "name": "Alex Rivera",
+    "department": "IT Support",
+    "role": "Systems Administrator",
+    "email": "alex.rivera@fictional.corp",
+    "leave_balance": {
+      "vacation": 8,
+      "sick": 0
+    }
+  },
+  {
+    "id": "EMP-103",
+    "name": "Sarah Jenkins",
+    "department": "Human Resources",
+    "role": "HR Generalist",
+    "email": "sarah.jenkins@fictional.corp",
+    "leave_balance": {
+      "vacation": 20,
+      "sick": 8
+    }
+  },
+  {
+    "id": "EMP-104",
+    "name": "Marcus Vance",
+    "department": "Engineering",
+    "role": "Backend Developer",
+    "email": "marcus.vance@fictional.corp",
+    "leave_balance": {
+      "vacation": 4,
+      "sick": 3
+    }
+  },
+  {
+    "id": "EMP-105",
+    "name": "Priya Patel",
+    "department": "Product",
+    "role": "Product Manager",
+    "email": "priya.patel@fictional.corp",
+    "leave_balance": {
+      "vacation": 12,
+      "sick": 6
+    }
+  },
+  {
+    "id": "EMP-106",
+    "name": "David Kim",
+    "department": "Sales",
+    "role": "Account Executive",
+    "email": "david.kim@fictional.corp",
+    "leave_balance": {
+      "vacation": 15,
+      "sick": 2
+    }
+  }
+]
