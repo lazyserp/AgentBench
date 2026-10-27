@@ -45,13 +45,23 @@ def create_ticket(employee_id : str , title : str , description : str ,priority 
 
     with open(TICKETS_FILE , "r") as f:
         tickets = json.load(f)
-        ticket_id = f"TCk-{1000 + len(tickets) + 1}"
-        return {
-                    "ticket_id" : ticket_id,
-                    "employee_id" : employee_id,
-                    "title" : title,
-                    "description" : description,
-                    "priortiy" : priority
-                }
+
+    ticket_id = f"TCK-{1000 + len(tickets) + 1}"
+    new_ticket = {
+        "ticket_id": ticket_id,
+        "employee_id": employee_id,
+        "title": title,
+        "description": description,
+        "priority": priority,
+        "status": "open"
+    }
+
+    tickets.append(new_ticket)
+
+    with open(TICKETS_FILE,"w") as f:
+        json.dump(tickets,f,indent=2)
+
+        
+    return new_ticket
 
     
