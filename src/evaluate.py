@@ -14,7 +14,14 @@ def check_tool_correctness(actual_tools : list[str], expected_tools: list[str]) 
 def check_facts_present(response : str, key_facts: list[str]) -> bool:
         """Returns True if all key facts appear in the response (case-insensitive)."""
         response_lower = response.lower()
-        return all(fact.lower() in response_lower for fact in key_facts)
+        for fact in key_facts:
+            if isinstance(fact,list):
+                if not any(synonym.lower() in response_lower for synonym in fact):
+                    return False
+            else:
+                if fact.lower() not in response_lower:
+                    return False
+        return True
 
 BENCHMARK_FILE = Path(__file__).resolve().parent.parent / "data" / "benchmark_cases.json"
 

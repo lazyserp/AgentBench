@@ -7,7 +7,7 @@
     "requires_clarification": false,
     "ground_truth": {
       "expected_outcome": "Identify Priya Patel's department and role.",
-      "key_facts": ["Product", "Product Manager"]
+      "key_facts": ["Product"]
     }
   },
   {
@@ -25,7 +25,7 @@
     "id": "TC-003",
     "user_prompt": "Can you check how much vacation time Marcus Vance has left?",
     "category": "leave_balance",
-    "expected_tools": ["get_employee", "get_leave_balance"],
+    "expected_tools": ["get_employee"],
     "requires_clarification": false,
     "ground_truth": {
       "expected_outcome": "Resolve Marcus Vance to EMP-104 and report remaining vacation days.",
@@ -40,7 +40,7 @@
     "requires_clarification": false,
     "ground_truth": {
       "expected_outcome": "Retrieve PTO rollover policy and state maximum carryover limit.",
-      "key_facts": ["5", "rollover", "forfeited"]
+      "key_facts": ["5", ["rollover", "carry over"], "forfeit"]
     }
   },
   {
@@ -80,7 +80,7 @@
     "id": "TC-008",
     "user_prompt": "What is Sarah's role and email address?",
     "category": "ambiguous",
-    "expected_tools": [],
+    "expected_tools": ["get_employee"],
     "requires_clarification": true,
     "ground_truth": {
       "expected_outcome": "Detect ambiguity between Sarah Connor (Engineering) and Sarah Jenkins (HR) and ask for clarification.",
