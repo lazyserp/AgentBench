@@ -27,15 +27,22 @@ def get_leave_balance(employee_id: str) -> dict | None:
 
 
 def search_policies(query : str) -> list[dict] |  None:
-    return_list = []
 
     with open(POLICIES_FILE,"r") as f:
         policies = json.load(f)
-        query = query.strip().lower()
-    
+        query_words = [ w.strip() for w in query.lower().split() if len(w) > 2]
+        matches = []
+
         for policy in policies:
-            if query in policy["title"].lower() or query in policy["content"].lower():
-                return_list.append(policy)
+            combined_text = (policy["title"] + " " + policy["content"]).lower()
+
+            overlap = sum(1 for word in query_words if word in combined_text)
+
+            if overlap > 0:
+                matches.append( (overlap,policy))
+
+        matches.sort(key=lambda x : x[0],reverse=True)
+    return [policy for score ,policy in matches]
     
     return return_list
 
