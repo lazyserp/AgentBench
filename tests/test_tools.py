@@ -3,18 +3,22 @@ from src.tools import search_policies
 from src.tools import get_employee, get_leave_balance
 
 def test_get_employee_by_id():
-    emp = get_employee("EMP-101")
-    assert emp is not None
-    assert emp["name"] == "Sarah Connor"
-
+    matches = get_employee("EMP-101")
+    assert len(matches) == 1
+    assert matches[0]["name"] == "Sarah Connor"
 
 def test_get_employee_by_name():
-    emp = get_employee("Sarah Connor")
-    assert "EMP-101"== emp["id"]
+    matches = get_employee("Sarah Connor")
+    assert len(matches) == 1
+    assert matches[0]["id"] == "EMP-101"
 
 def test_get_employee_not_found():
-    emp = get_employee("ghost")
-    assert emp is None
+    matches = get_employee("ghost")
+    assert matches == []
+
+def test_get_employee_ambiguous():
+    matches = get_employee("Sarah")
+    assert len(matches) == 2  
 
 def test_get_leave_balance():
     assert get_leave_balance("EMP-101") == {"vacation" : 14, "sick" : 5}
