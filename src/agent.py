@@ -1,5 +1,6 @@
 import os
 import json
+import time
 from dotenv import load_dotenv
 from groq import Groq
 
@@ -122,6 +123,10 @@ def run_agent(user_prompt: str, model: str = "openai/gpt-oss-120b", max_step: in
         print(f"\n{'='*20} AGENT EXECUTION TRACE {'='*20}")
         print(f"[USER PROMPT]: {user_prompt}")
 
+    start_time = time.perf_counter()
+    total_prompt_tokens, total_completion_tokens = 0,0
+
+
     for step in range(1, max_step + 1):
         if verbose:
             print(f"\n--- [Turn {step}]: Calling LLM ({model}) ---")
@@ -136,14 +141,26 @@ def run_agent(user_prompt: str, model: str = "openai/gpt-oss-120b", max_step: in
 
         response_message = response.choices[0].message
 
+        if response.usage:
+            total_prompt_tokens += response.usage.prompt_tokens
+            total_completion_tokens += response.usage.completion_tokens
+
         # Case A: Model didn't call any tools, it answered the user directly
         if not response_message.tool_calls:
             if verbose:
                 print(f"--- [Turn {step}]: LLM decided to answer directly ---")
                 print(f"[FINAL ANSWER]: {response_message.content}\n{'='*58}\n")
+            latency_seconds = round(time.perf_counter() - start_time, 2)
+
             return {
                 "response": response_message.content,
-                "tool_calls": recorded_tool_calls
+                "tool_calls": recorded_tool_calls,
+                "metrics": {
+                    "latency_seconds": latency_seconds,
+                    "prompt_tokens": total_prompt_tokens,
+                    "completion_tokens": total_completion_tokens,
+                    "total_tokens": total_prompt_tokens + total_completion_tokens
+                }
             }
 
         # Case B: Model requested one or more tool calls
@@ -179,7 +196,14 @@ def run_agent(user_prompt: str, model: str = "openai/gpt-oss-120b", max_step: in
                 "content": json.dumps(tool_output)
             })
 
+    latency_seconds = round(time.perf_counter() - start_time, 2)
     return {
         "response": response_message.content or "Reached maximum step limit.",
-        "tool_calls": recorded_tool_calls
+        "tool_calls": recorded_tool_calls,
+        "metrics": {
+            "latency_seconds": latency_seconds,
+            "prompt_tokens": total_prompt_tokens,
+            "completion_tokens": total_completion_tokens,
+            "total_tokens": total_prompt_tokens + total_completion_tokens
+        }
     }
