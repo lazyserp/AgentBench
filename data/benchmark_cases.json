@@ -1,0 +1,113 @@
+[
+  {
+    "id": "TC-001",
+    "user_prompt": "What department does Priya Patel work in?",
+    "category": "employee_lookup",
+    "expected_tools": ["get_employee"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Identify Priya Patel's department and role.",
+      "key_facts": ["Product", "Product Manager"]
+    }
+  },
+  {
+    "id": "TC-002",
+    "user_prompt": "How many sick days does EMP-102 have remaining?",
+    "category": "leave_balance",
+    "expected_tools": ["get_leave_balance"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Report that Alex Rivera (EMP-102) has 0 sick days remaining.",
+      "key_facts": ["0", "sick"]
+    }
+  },
+  {
+    "id": "TC-003",
+    "user_prompt": "Can you check how much vacation time Marcus Vance has left?",
+    "category": "leave_balance",
+    "expected_tools": ["get_employee", "get_leave_balance"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Resolve Marcus Vance to EMP-104 and report remaining vacation days.",
+      "key_facts": ["4", "vacation"]
+    }
+  },
+  {
+    "id": "TC-004",
+    "user_prompt": "What is our company policy on carrying over unused vacation days into the new year?",
+    "category": "policy",
+    "expected_tools": ["search_policies"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Retrieve PTO rollover policy and state maximum carryover limit.",
+      "key_facts": ["5", "rollover", "forfeited"]
+    }
+  },
+  {
+    "id": "TC-005",
+    "user_prompt": "Do I need to submit a doctor's note if I'm out sick with the flu for 4 days?",
+    "category": "policy",
+    "expected_tools": ["search_policies"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Explain that sick leave exceeding 3 consecutive days requires medical documentation within 48 hours.",
+      "key_facts": ["3 consecutive days", "doctor's note", "48 hours"]
+    }
+  },
+  {
+    "id": "TC-006",
+    "user_prompt": "I am David Kim (EMP-106). My VPN client won't connect this morning, please file a high priority ticket.",
+    "category": "ticket",
+    "expected_tools": ["create_ticket"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Successfully call create_ticket for EMP-106 with high priority and open status.",
+      "key_facts": ["EMP-106", "high", "ticket"]
+    }
+  },
+  {
+    "id": "TC-007",
+    "user_prompt": "Please file an urgent IT ticket for my broken laptop screen.",
+    "category": "missing_info",
+    "expected_tools": [],
+    "requires_clarification": true,
+    "ground_truth": {
+      "expected_outcome": "Ask the user for their employee ID or name before creating the ticket.",
+      "key_facts": ["employee ID", "name"]
+    }
+  },
+  {
+    "id": "TC-008",
+    "user_prompt": "What is Sarah's role and email address?",
+    "category": "ambiguous",
+    "expected_tools": [],
+    "requires_clarification": true,
+    "ground_truth": {
+      "expected_outcome": "Detect ambiguity between Sarah Connor (Engineering) and Sarah Jenkins (HR) and ask for clarification.",
+      "key_facts": ["Sarah Connor", "Sarah Jenkins"]
+    }
+  },
+  {
+    "id": "TC-009",
+    "user_prompt": "Can you look up the email and role for employee EMP-999?",
+    "category": "nonexistent",
+    "expected_tools": ["get_employee"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Call get_employee, determine the ID does not exist, and clearly state that no employee was found.",
+      "key_facts": ["not found", "does not exist"]
+    }
+  },
+  {
+    "id": "TC-010",
+    "user_prompt": "What is the company policy on bringing pets or dogs to the office?",
+    "category": "policy_uncovered",
+    "expected_tools": ["search_policies"],
+    "requires_clarification": false,
+    "ground_truth": {
+      "expected_outcome": "Search policies, find no matching document, and state that there is no recorded policy for office pets.",
+      "key_facts": ["no policy found", "not mentioned"]
+    }
+  }
+]
+
