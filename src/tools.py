@@ -5,22 +5,25 @@ DATA_FILE = Path(__file__).resolve().parent.parent / "data" / "employees.json"
 POLICIES_FILE = Path(__file__).resolve().parent.parent / "data" / "policies.json"
 TICKETS_FILE = Path(__file__).resolve().parent.parent / "data" / "tickets.json"
 
-def get_employee(query : str) ->  dict | None:
-    with open(DATA_FILE ,"r") as f:
+def get_employee(query: str) -> list[dict]:
+    with open(DATA_FILE, "r") as f:
         employees = json.load(f)
-        query = query.strip().lower()
 
-        for emp in employees:
-            if emp["id"].lower() == query or emp["name"].lower() == query:
-                return emp
-        return None 
+    query = query.strip().lower()
+    matches = []
+
+    for emp in employees:
+        if emp["id"].lower() == query or query in emp["name"].lower():
+            matches.append(emp)
+
+    return matches
 
 
-def get_leave_balance(employee_id  : str) -> dict | None:
-    emp = get_employee(employee_id)
-    if emp:
-        return emp["leave_balance"]
-    return None
+def get_leave_balance(employee_id: str) -> dict | None:
+    matches = get_employee(employee_id)
+    if not matches:
+        return None
+    return matches[0]["leave_balance"]
 
 
 def search_policies(query : str) -> list[dict] |  None:
