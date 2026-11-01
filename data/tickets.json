@@ -6,5 +6,13 @@
     "description": "Black screen after reboot",
     "priority": "high",
     "status": "open"
+  },
+  {
+    "ticket_id": "TCK-1002",
+    "employee_id": "EMP-106",
+    "title": "VPN connection failure",
+    "description": "David Kim (EMP-106) reports that his VPN client won't connect this morning. Needs urgent assistance.",
+    "priority": "high",
+    "status": "open"
   }
 ]

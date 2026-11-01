@@ -26,6 +26,10 @@ def check_facts_present(response : str, key_facts: list[str]) -> bool:
 BENCHMARK_FILE = Path(__file__).resolve().parent.parent / "data" / "benchmark_cases.json"
 
 def run_benchmark():
+    total_latency = 0.0
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
+
     with open(BENCHMARK_FILE,"r") as f:
         cases = json.load(f)
 
@@ -47,6 +51,11 @@ def run_benchmark():
         result = run_agent(prompt)
         actual_tools = [ t["tool_name"] for t in result["tool_calls"]]
         response_text = result["response"]
+
+        metrics = result.get("metrics",{})
+        total_latency += metrics.get("latency_seconds",0)
+        total_prompt_tokens += metrics.get("prompt_tokens", 0)
+        total_completion_tokens += metrics.get("completion_tokens",0)
 
         tool_ok = check_tool_correctness(actual_tools,expected_tools)
         facts_ok = check_facts_present(response_text,key_facts)
@@ -71,6 +80,16 @@ def run_benchmark():
     print(f"Tool Accuracy   : {tool_passed / total * 100:.1f}%")
     print(f"Fact Accuracy   : {facts_passed / total * 100:.1f}%")
     print(f"Overall Success : {overall_passed / total * 100:.1f}%\n")
+
+    avg_latency = total_latency / total
+    total_tokens = total_prompt_tokens + total_completion_tokens
+    # Estimated cost in dollars
+    estimated_cost = (total_prompt_tokens * 0.00000015) + (total_completion_tokens * 0.00000060)
+
+    print("\n--- Performance & Cost Profiling ---")
+    print(f"Avg Latency     : {avg_latency:.2f}s per query")
+    print(f"Total Tokens    : {total_tokens:,} (Prompt: {total_prompt_tokens:,} | Completion: {total_completion_tokens:,})")
+    print(f"Estimated Cost  : ${estimated_cost:.5f}\n")
 
 
 
