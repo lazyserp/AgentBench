@@ -109,16 +109,23 @@ Guidelines:
 """
 
 
-def run_agent(user_prompt: str , model : str = "openai/gpt-oss-120b" , max_step : int = 5) -> dict:
+def run_agent(user_prompt: str, model: str = "openai/gpt-oss-120b", max_step: int = 5, verbose: bool = False) -> dict:
     client = Groq()
     messages = [
-        {"role" : "system" , "content" : SYSTEM_PROMPT},
-        {"role" : "user", "content" : user_prompt}
+        {"role": "system", "content": SYSTEM_PROMPT},
+        {"role": "user", "content": user_prompt}
     ]
 
     recorded_tool_calls = []
 
-    for _ in range(max_step):
+    if verbose:
+        print(f"\n{'='*20} AGENT EXECUTION TRACE {'='*20}")
+        print(f"[USER PROMPT]: {user_prompt}")
+
+    for step in range(1, max_step + 1):
+        if verbose:
+            print(f"\n--- [Turn {step}]: Calling LLM ({model}) ---")
+
         response = client.chat.completions.create(
             model=model,
             messages=messages,
@@ -131,28 +138,40 @@ def run_agent(user_prompt: str , model : str = "openai/gpt-oss-120b" , max_step 
 
         # Case A: Model didn't call any tools, it answered the user directly
         if not response_message.tool_calls:
+            if verbose:
+                print(f"--- [Turn {step}]: LLM decided to answer directly ---")
+                print(f"[FINAL ANSWER]: {response_message.content}\n{'='*58}\n")
             return {
-                "response" : response_message.content,
-                "tool_calls" : recorded_tool_calls
+                "response": response_message.content,
+                "tool_calls": recorded_tool_calls
             }
+
+        # Case B: Model requested one or more tool calls
         messages.append(response_message)
+
+        if verbose:
+            print(f"--- [Turn {step}]: LLM requested {len(response_message.tool_calls)} tool call(s) ---")
 
         for tool_call in response_message.tool_calls:
             fn_name = tool_call.function.name
             fn_args = json.loads(tool_call.function.arguments)
 
+            if verbose:
+                print(f"    [LLM REQUEST]: {fn_name}({fn_args})")
+
             if fn_name in TOOL_MAP:
                 tool_output = TOOL_MAP[fn_name](**fn_args)
             else:
-                tool_output = {"error" : f"Tool { fn_name} not found"}
-            
-            recorded_tool_calls.append(
-                {
-                    "tool_name" : fn_name,
-                    "arguement" : fn_args,
-                    "output" : tool_output
-                }
-            )
+                tool_output = {"error": f"Tool '{fn_name}' not found"}
+
+            if verbose:
+                print(f"   [TOOL OUTPUT]: {tool_output}")
+
+            recorded_tool_calls.append({
+                "tool_name": fn_name,
+                "arguments": fn_args,
+                "output": tool_output
+            })
 
             messages.append({
                 "role": "tool",
@@ -160,7 +179,6 @@ def run_agent(user_prompt: str , model : str = "openai/gpt-oss-120b" , max_step 
                 "content": json.dumps(tool_output)
             })
 
-    # if the loop finishes all max_steps without returning
     return {
         "response": response_message.content or "Reached maximum step limit.",
         "tool_calls": recorded_tool_calls
