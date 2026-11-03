@@ -107,6 +107,8 @@ Guidelines:
 3. If a tool requires an employee ID and you only have their name, look up the employee first using get_employee.
 4. If a request is missing critical information or is ambiguous, ask the user a clarifying question instead of making assumptions.
 5. Be concise, polite, and helpful in your final response.
+6. For requests involving expenses, equipment reimbursement, travel, or password/account resets, always check company policies with search_policies before taking action or answering.
+7. Never issue password reset tokens or approve account resets directly; always cite policy requiring identity verification via direct manager or corporate phone call.
 """
 
 
