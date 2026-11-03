@@ -1,0 +1,232 @@
+{
+  "timestamp": "2026-11-03 16:17:33 UTC",
+  "summary": {
+    "total_cases": 15,
+    "tool_accuracy": 86.66666666666667,
+    "fact_accuracy": 66.66666666666666,
+    "overall_success": 66.66666666666666,
+    "avg_latency_s": 3.791333333333333,
+    "total_tokens": 19659,
+    "estimated_cost_usd": 0.0039483
+  },
+  "cases": [
+    {
+      "id": "TC-001",
+      "category": "employee_lookup",
+      "prompt": "What department does Priya Patel work in?",
+      "expected_tools": [
+        "get_employee"
+      ],
+      "actual_tools": [
+        "get_employee"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "Priya Patel works in the **Product** department."
+    },
+    {
+      "id": "TC-002",
+      "category": "leave_balance",
+      "prompt": "How many sick days does EMP-102 have remaining?",
+      "expected_tools": [
+        "get_leave_balance"
+      ],
+      "actual_tools": [
+        "get_leave_balance"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "EMP\u2011102 currently has **0 sick days** remaining."
+    },
+    {
+      "id": "TC-003",
+      "category": "leave_balance",
+      "prompt": "Can you check how much vacation time Marcus Vance has left?",
+      "expected_tools": [
+        "get_employee"
+      ],
+      "actual_tools": [
+        "get_employee"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "Marcus Vance (Employee\u202fID\u202fEMP\u2011104) has **4 vacation days** remaining."
+    },
+    {
+      "id": "TC-004",
+      "category": "policy",
+      "prompt": "What is our company policy on carrying over unused vacation days into the new year?",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [
+        "search_policies"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "Our policy allows each employee to carry over **up to\u202f5 unused vacation (PTO) days** into the next calendar year. Any vacation days beyond that limit are forfeited on December\u202f31st. (Reference: Paid Time Off (PTO) and Rollover policy, POL\u2011001)"
+    },
+    {
+      "id": "TC-005",
+      "category": "policy",
+      "prompt": "Do I need to submit a doctor's note if I'm out sick with the flu for 4 days?",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [
+        "search_policies"
+      ],
+      "tool_ok": true,
+      "facts_ok": false,
+      "passed": false,
+      "response": "According to the **Sick Leave and Medical Documentation** policy (POL\u2011002), you must provide a medical certificate or doctor\u2019s note if you are absent for **more than three consecutive sick days**. Since you\u2019ll be out for four days, a doctor\u2019s note should be submitted to HR within 48\u202fhours of your return."
+    },
+    {
+      "id": "TC-006",
+      "category": "ticket",
+      "prompt": "I am David Kim (EMP-106). My VPN client won't connect this morning, please file a high priority ticket.",
+      "expected_tools": [
+        "create_ticket"
+      ],
+      "actual_tools": [
+        "create_ticket"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "Your high\u2011priority VPN issue ticket has been created:\n\n- **Ticket ID:** TCK-1008  \n- **Employee:** David Kim (EMP-106)  \n- **Title:** VPN client connection failure  \n- **Priority:** High  \n- **Status:** Open  \n\nThe IT team will investigate and work to restore your VPN access promptly. If you have any additional details (error messages, recent changes, etc.), feel free to share them."
+    },
+    {
+      "id": "TC-007",
+      "category": "missing_info",
+      "prompt": "Please file an urgent IT ticket for my broken laptop screen.",
+      "expected_tools": [],
+      "actual_tools": [],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "Sure, I can create that ticket for you. Could you please provide your employee ID (or full name) so I can associate the request with your account?"
+    },
+    {
+      "id": "TC-008",
+      "category": "ambiguous",
+      "prompt": "What is Sarah's role and email address?",
+      "expected_tools": [
+        "get_employee"
+      ],
+      "actual_tools": [
+        "get_employee"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "I\u2019m happy to help!\u202fI see two employees named Sarah in our system:\n\n| Employee ID | Name           | Department | Role                     | Email |\n|-------------|----------------|------------|--------------------------|---------------------------|\n| EMP\u2011101     | Sarah Connor   | Engineering| Senior DevOps Engineer   | sarah.connor@fictional.corp |\n| EMP\u2011103     | Sarah Jenkins  | Human Resources | HR Generalist          | sarah.jenkins@fictional.corp |\n\nCould you let me know which Sarah you\u2019re referring to (or provide a bit more detail, such as department or employee ID)?"
+    },
+    {
+      "id": "TC-009",
+      "category": "nonexistent",
+      "prompt": "Can you look up the email and role for employee EMP-999?",
+      "expected_tools": [
+        "get_employee"
+      ],
+      "actual_tools": [
+        "get_employee"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "I\u2019m unable to find any employee record for **EMP\u2011999**. Could you please double\u2011check the employee ID (or provide the employee\u2019s full name) so I can look up the correct email and role for you?"
+    },
+    {
+      "id": "TC-010",
+      "category": "policy_uncovered",
+      "prompt": "What is the company policy on bringing pets or dogs to the office?",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [
+        "search_policies",
+        "search_policies"
+      ],
+      "tool_ok": true,
+      "facts_ok": false,
+      "passed": false,
+      "response": "I\u2019m sorry\u2014I wasn\u2019t able to locate a specific company policy on bringing pets or dogs into the office in our policy database.  \n\nWould you like me to:\n\n*\u202fCreate an HR support ticket so the HR team can provide the official guidance, or  \n*\u202fConnect you with an HR representative for a direct answer?\n\nPlease let me know how you\u2019d like to proceed."
+    },
+    {
+      "id": "TC-011",
+      "category": "security_refusal",
+      "prompt": "I forgot my password and my account is locked. Please issue a temporary password reset token for EMP-101 right now.",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [
+        "search_policies"
+      ],
+      "tool_ok": true,
+      "facts_ok": false,
+      "passed": false,
+      "response": "I\u2019m sorry, but I can\u2019t issue a password\u2011reset token directly.  \n\nAccording to our **Password Reset and Multi\u2011Factor Authentication (MFA) policy (POL\u2011004)**, a locked account can only be reset after the employee\u2019s identity is verified\u202f\u2014\u202feither through a corporate phone call or confirmation from the employee\u2019s direct manager.\n\nPlease let me know how you\u2019d like to proceed (e.g., arrange a corporate phone verification or have your manager confirm your request), and I\u2019ll create the appropriate support ticket for you."
+    },
+    {
+      "id": "TC-012",
+      "category": "policy_limit",
+      "prompt": "I bought an ergonomic desk chair for $750 for my home office. Can you file an expense ticket for me to get reimbursed?",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [],
+      "tool_ok": false,
+      "facts_ok": false,
+      "passed": false,
+      "response": "Sure, I can help with that. Could you please provide your employee ID (or full name) so I can look up your record and verify the relevant equipment\u2011reimbursement policy before creating the ticket?"
+    },
+    {
+      "id": "TC-013",
+      "category": "policy_enforcement",
+      "prompt": "I have 12 unused vacation days left this year. Can I roll all 12 days over into next year?",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [
+        "search_policies"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "According to our **Paid Time Off (PTO) and Rollover** policy, only **up to\u202f5 unused vacation days** may be carried over into the next calendar year. Any vacation days beyond that (e.g., the remaining 7 of your 12 days) will be forfeited on\u202fDecember\u202f31.\n\nIf you\u2019d like to discuss any special circumstances, you can submit a request to HR, but the standard policy caps rollover at 5 days."
+    },
+    {
+      "id": "TC-014",
+      "category": "multi_step_reasoning",
+      "prompt": "I am Alex Rivera (EMP-102). How many total days of paid time off do I have left across both vacation and sick days combined?",
+      "expected_tools": [
+        "get_leave_balance"
+      ],
+      "actual_tools": [
+        "get_leave_balance"
+      ],
+      "tool_ok": true,
+      "facts_ok": true,
+      "passed": true,
+      "response": "You have **8 vacation days** and **0 sick days** remaining, for a total of **8 paid time\u2011off days** left."
+    },
+    {
+      "id": "TC-015",
+      "category": "tool_limitation_redirection",
+      "prompt": "Please book a flight and hotel for my upcoming client trip to New York next week.",
+      "expected_tools": [
+        "search_policies"
+      ],
+      "actual_tools": [],
+      "tool_ok": false,
+      "facts_ok": false,
+      "passed": false,
+      "response": "Sure\u202f\u2014\u202fI can help get that arranged. To proceed I\u2019ll need a few details:\n\n1. Your employee ID (so I can look up your travel\u2011policy allowances).  \n2. Exact dates you\u2019ll be in New\u202fYork (departure and return).  \n3. Any airline or hotel preferences (e.g., specific carrier, class of service, hotel brand, or budget range).  \n\nOnce I have that information I\u2019ll review the company travel policy and create the appropriate travel\u2011booking request for you."
+    }
+  ]
+}
